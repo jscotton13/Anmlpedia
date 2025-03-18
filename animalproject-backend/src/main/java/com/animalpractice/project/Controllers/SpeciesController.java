@@ -47,9 +47,9 @@ public class SpeciesController {
         return ResponseEntity.ok(speciesService.getSpeciesBySpeciesId(speciesId));
     }
 
-    //REST (GET): /api/species/groupname/{groupName}
+    //REST (GET): /api/species/{groupName}
     @Operation(summary = "Get species by Group Name", description = "Gets all species that belong to the group with the specified name")
-    @GetMapping("/groupname/{groupName}")
+    @GetMapping("/{groupName}")
     public ResponseEntity<List<SpeciesDto>> getSpeciesByGroupName(@PathVariable String groupName) {
         return ResponseEntity.ok(speciesService.getSpeciesByGroupName(groupName));
     }

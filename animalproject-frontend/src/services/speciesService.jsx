@@ -12,7 +12,7 @@ const API_URL = "http://localhost:8080/api/species";
   export const getSpeciesByGroupId = (groupId) => axios.get(`${API_URL}/group/${groupId}`);
 
   // Get species by Group Name
-  export const getSpeciesByGroupName = (groupName) => axios.get(`${API_URL}/groupname/${groupName}`);
+  export const getSpeciesByGroupName = (groupName) => axios.get(`${API_URL}/${groupName}`);
 
   // Add a new species
   export const addSpecies = (speciesData) => axios.post(API_URL, speciesData);

@@ -28,7 +28,7 @@ const SpeciesManagementComponent = ({ open, onClose, selectedSpecies, refreshSpe
             setName(selectedSpecies.name);
             setDesc(selectedSpecies.desc);
             setImgPath(selectedSpecies.imgPath || '');
-            setGroupId(selectedSpecies.groupId || '');
+            setGroupId(selectedSpecies.group?.id || '');
         } else {
             setName('');
             setDesc('');
@@ -47,11 +47,11 @@ const SpeciesManagementComponent = ({ open, onClose, selectedSpecies, refreshSpe
 
         try {
             if (selectedSpecies) {
-                updateSpecies(selectedSpecies.id, speciesData);  // Update species
+                await updateSpecies(selectedSpecies.id, speciesData);  // Update species
             } else {
-                addSpecies(speciesData);  // Add new species
+                await addSpecies(speciesData);  // Add new species
             }
-            refreshSpecies();
+            await refreshSpecies();
             onClose();
         } catch (error) {
             console.error("Error saving species:", error);
