@@ -1,6 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
-import GroupComponent from './Group/groupComponent';
-import { SpeciesComponent } from './Species/speciesComponent';
+import GroupComponent from './Group/GroupComponent';
+import { SpeciesComponent } from './Species/SpeciesComponent';
+import AnimalComponent from "./components/Animals/AnimalComponent";
+
 
 const RoutesComponent = () => {
   return (
@@ -11,15 +13,17 @@ const RoutesComponent = () => {
         {/* View All Groups */}
         <Route path="/groups" element={<GroupComponent />} />
 
-        {/* View Species (All or by Group) */}
+        {/* View All Species or Species by Group */}
         <Route path="/species" element={<SpeciesComponent />} />
-        <Route path="/species/:groupId" element={<SpeciesComponent />} /> 
+        <Route path="/:groupName/species" element={<SpeciesComponent />} />
 
-        {/* View Animals (All or by Group) */}
-        <Route path="/animals" element={<SpeciesComponent />} />
-        <Route path="/animals/:groupId" element={<SpeciesComponent />} /> 
+        {/* View All Animals, Animals by Group, or Animals by Species */}
+        <Route path="/animals" element={<AnimalComponent />} />
+        <Route path="/:groupName/:speciesName/animals" element={<AnimalComponent />} />
+        <Route path="/:groupName/animals" element={<AnimalComponent />} />
 
-        {/* Management Routes */}
+        {/* View Specific Animal */}
+        <Route path="/:groupName/:speciesName/:animalName" element={<AnimalComponent />}/>
 
     </Routes>
   );
