@@ -53,7 +53,7 @@ const HeaderComponent = () => {
               <li className="nav-item">
                 <NavLink 
                   className='nav-link' 
-                  to='animals' 
+                  to='/animals' 
                   style={({ isActive }) => ({
                     padding: '12px 20px',
                     color: isActive ? '#FFD700' : 'white',

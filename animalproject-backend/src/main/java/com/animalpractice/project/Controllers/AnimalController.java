@@ -37,14 +37,14 @@ public class AnimalController {
         return ResponseEntity.ok(animalService.getAnimalById(animalId));
     }
 
-    // REST (GET): /api/animal/species/{speciesId}
+    // REST (GET): /api/animal/{speciesId}
     @Operation(summary = "Get animals by Species ID", description = "Retrieves all animals that belong to the specified species")
-    @GetMapping("/species/{speciesId}")
+    @GetMapping("/{speciesId}")
     public ResponseEntity<List<AnimalDto>> getAnimalsBySpeciesId(@PathVariable Long speciesId) {
         return ResponseEntity.ok(animalService.getAnimalBySpeciesId(speciesId));
     }
 
-    // REST (GET): /api/animal/speciesname/{speciesName}
+    // REST (GET): /api/animal/{speciesName}
     @Operation(summary = "Get animals by Species Name", description = "Retrieves all animals that belong to the species with the given name")
     @GetMapping("/{speciesName}")
     public ResponseEntity<List<AnimalDto>> getAnimalsBySpeciesName(@PathVariable String speciesName) {

@@ -2,7 +2,7 @@ import React, { useEffect, useState, createContext, useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Tooltip } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getAllSpecies,  getSpeciesByGroupName, deleteSpecies } from '../../services/speciesService'
+import { getAllSpecies,  getSpeciesByGroupName, deleteSpecies, getSpeciesByGroupId } from '../../services/speciesService'
 import SpeciesManagementComponent from './SpeciesManagementComponent';
 // Context for species data
 const SpeciesContext = createContext();
@@ -59,7 +59,7 @@ export const SpeciesComponent = () => {
     };
     
     
-    const onViewAnimals = (speciesId, speciesName) => {
+    const onViewAnimals = (speciesId) => {
         navigate(`/animals/${speciesId}`); // Navigate to the animals page for this species
     };
 
@@ -96,7 +96,7 @@ export const SpeciesComponent = () => {
   const refreshSpecies = async () => {
     console.log("Refreshing species list... ")
     if (groupId) {
-       await fetchSpeciesDataByGroup(groupId); // Refresh group-specific species
+       await getSpeciesByGroupId(groupId); // Refresh group-specific species
     } else {
        await fetchSpeciesData(); // Refreshes all species
     }

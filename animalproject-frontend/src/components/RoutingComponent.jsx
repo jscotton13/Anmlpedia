@@ -19,9 +19,9 @@ const RoutesComponent = () => {
         <Route path="/species/:groupName" element={<SpeciesComponent />} /> 
 
         {/* View Animals (All or by Species) */}
-        <Route path="/animals" element={<SpeciesComponent />} />
-        <Route path="/animals/:speciesId" element={<SpeciesComponent />} /> 
-        <Route path="/animals/:speciesName" element={<SpeciesComponent />} /> 
+        <Route path="/animals" element={<AnimalComponent />} />
+        <Route path="/animals/:speciesId" element={<AnimalComponent />} /> 
+        <Route path="/animals/:speciesName" element={<AnimalComponent />} /> 
 
 
     </Routes>
