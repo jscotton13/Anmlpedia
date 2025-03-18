@@ -30,10 +30,9 @@ const GroupComponent = () => {
     fetchData();
   }, []);
 
-  const onViewSpecies = (groupName) => {
-    navigate(`/${groupName}/species`);
-  };
-
+  const onViewSpecies = (groupId) => {
+    navigate(`/species/${groupId}`);
+  }
   const handleOpenModal = (group = null) => {
     if (group) {
       setSelectedGroup(group);
