@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin("*")
 @AllArgsConstructor
 @RestController
-@RequestMapping(value = "/api/species", produces = "application/json")
+@RequestMapping(value = "/api/species")
 @Tag(name = "Species Controller") //swagger
 public class SpeciesController {
     @Autowired

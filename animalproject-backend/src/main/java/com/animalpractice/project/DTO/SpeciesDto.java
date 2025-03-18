@@ -18,7 +18,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SpeciesDto {
 
-    @JsonIgnore
     private Long id;
     private String name;
     private String desc;

@@ -2,7 +2,7 @@ import React, { useEffect, useState, createContext, useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Tooltip } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getAllSpecies, getSpeciesByGroupId, deleteSpecies } from '../../services/speciesService'
+import { getAllSpecies, getSpeciesByGroupId, getSpeciesByGroupName, deleteSpecies } from '../../services/speciesService'
 import { getGroupById } from '../../services/groupService'
 import SpeciesManagementComponent from './SpeciesManagementComponent';
 // Context for species data
@@ -19,57 +19,50 @@ export const SpeciesProvider = ({ children }) => {
 };
 
 export const SpeciesComponent = () => {
-    const context = useContext(SpeciesContext);
     const navigate = useNavigate();
     const [species, setSpecies] = useState([]);
     const [selectedSpecies, setSelectedSpecies] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     
-    const {groupId} = useParams();
-    const [groupName, setGroupName] = useState("");
-
+    const { groupName } = useParams(); // Get groupName from URL
+    const [groupId, setGroupId] = useState(null); // Track groupId
+    const [groupNameTitle, setGroupName] = useState(""); // For setting group name title for UI
+    
     useEffect(() => {
         console.log("Current Params:", { groupId });
-        setSpecies([]);  // Reset species before fetching new data
-        if (groupId) {
-            fetchGroupName(groupId);
-            fetchSpeciesDataByGroup(groupId);
+        if (groupName) {
+            fetchGroupIdByName(groupName);
         } else {
             fetchSpeciesData();
         }
-    }, [groupId]);
+    }, [groupName]);
 
 
-    const fetchGroupName = async (groupId) => {
+    const fetchGroupIdByName = async (groupName) => {
         try {
-            const response = await getGroupById(groupId);  // API call to get group details
-            setGroupName(response.data.name); // Update state with group name
+            const response = await getSpeciesByGroupName(groupName); // API to get species by groupName
+            console.log("Fetched species by group:", response.data);
+            setGroupId(response.data.groupId); // Set groupId from response
+            setGroupName(groupName); // Set groupName title for UI display
+            setSpecies(response.data.species); // Update species
         } catch (error) {
-            console.error("Error fetching group name:", error);
-            setGroupName("Unknown");
-        }
-    };
-
-    const fetchSpeciesDataByGroup = async (groupId) => {
-        try {
-            const response = await getSpeciesByGroupId(groupId); // Fetch species by groupId
-            setSpecies(response.data);
-        } catch (error) {
-            console.error("Error fetching species data by group:", error);
+            console.error("Error fetching species by groupName:", error);
         }
     };
 
     const fetchSpeciesData = async () => {
         try {
-            const response = await getAllSpecies();
-            setSpecies(response.data); // Access data from response
+            const response = await getAllSpecies(); // API call to get all species
+            console.log("Fetched species data:", response.data);
+            setSpecies(response.data);
         } catch (error) {
             console.error("Error fetching species data:", error);
         }
     };
+
     const handleOpenModal = (species = null) => {
-        if (species && species.id) {
+        if (species) {
             console.log("Opening modal for editing species:", species);
             setSelectedSpecies(species);
             setIsEditMode(true);
@@ -85,6 +78,7 @@ export const SpeciesComponent = () => {
         setIsModalOpen(false);
         setSelectedSpecies(null); // Reset state when closing the modal
     };
+
   const onDeleteSpecies = async (speciesId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this species?");
     if (!confirmDelete) return;

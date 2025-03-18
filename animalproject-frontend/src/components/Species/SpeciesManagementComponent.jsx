@@ -37,46 +37,8 @@ const SpeciesManagementComponent = ({ open, onClose, selectedSpecies, refreshSpe
         }
     }, [selectedSpecies, open]);
 
-    const handleAddSpecies = (speciesData) => {
-        fetch(`/api/species/${groupId}`, { // Use groupId in URL
-            method: 'POST',
-            body: JSON.stringify(speciesData),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('New species added:', data);
-            refreshSpecies();
-            onClose();
-        })
-        .catch(error => console.error('Error adding species:', error));
-    };
-
-    const handleUpdateSpecies = (speciesId, speciesData) => {
-        console.log('Updating species with ID:', speciesId, 'Under group:', groupId); // Log both IDs
-        fetch(`/api/species/${groupId}/${speciesId}`, {
-            method: 'PUT',
-            body: JSON.stringify(speciesData),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Species updated:', data);
-            refreshSpecies();
-            onClose();
-        })
-        .catch(error => {
-            console.error('Error updating species:', error);
-        });
-    };
-
     const handleSubmit = async () => {
         const speciesData = { 
-            id: selectedSpecies ? selectedSpecies.id : null, 
             name, 
             desc, 
             imgPath, 
@@ -85,10 +47,12 @@ const SpeciesManagementComponent = ({ open, onClose, selectedSpecies, refreshSpe
 
         try {
             if (selectedSpecies) {
-                handleUpdateSpecies(selectedSpecies.id, speciesData);  // Update species
+                updateSpecies(selectedSpecies.id, speciesData);  // Update species
             } else {
-                handleAddSpecies(speciesData);  // Add new species
+                addSpecies(speciesData);  // Add new species
             }
+            refreshSpecies();
+            onClose();
         } catch (error) {
             console.error("Error saving species:", error);
         }
