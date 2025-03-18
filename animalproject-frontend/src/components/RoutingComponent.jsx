@@ -13,17 +13,14 @@ const RoutesComponent = () => {
         {/* View All Groups */}
         <Route path="/groups" element={<GroupComponent />} />
 
-        {/* View All Species or Species by Group */}
+        {/* View Species (All or by Group) */}
         <Route path="/species" element={<SpeciesComponent />} />
-        <Route path="/:groupName/species" element={<SpeciesComponent />} />
+        <Route path="/species/:groupId" element={<SpeciesComponent />} /> 
 
-        {/* View All Animals, Animals by Group, or Animals by Species */}
-        <Route path="/animals" element={<AnimalComponent />} />
-        <Route path="/:groupName/:speciesName/animals" element={<AnimalComponent />} />
-        <Route path="/:groupName/animals" element={<AnimalComponent />} />
+        {/* View Animals (All or by Group) */}
+        <Route path="/animals" element={<SpeciesComponent />} />
+        <Route path="/animals/:groupId" element={<SpeciesComponent />} /> 
 
-        {/* View Specific Animal */}
-        <Route path="/:groupName/:speciesName/:animalName" element={<AnimalComponent />}/>
 
     </Routes>
   );
