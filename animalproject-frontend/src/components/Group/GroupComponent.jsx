@@ -1,6 +1,6 @@
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Tooltip } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import React, { useCallback, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllGroups, deleteGroup } from "../../services/groupService";
 import GroupManagementComponent from "./groupManagementComponent";
@@ -9,6 +9,7 @@ const GroupComponent = () => {
   const [groups, setGroups] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
   const navigate = useNavigate();
 
   const fetchGroupDataApi = async () => {
@@ -17,34 +18,40 @@ const GroupComponent = () => {
       return response.data; // Axios wraps the response in a data object
     } catch (error) {
       console.error("Error fetching groups: ", error);
-      return;
+      return[];
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchGroupDataApi();
-      if (Array.isArray(data)) {
+        const data = await fetchGroupDataApi();
         setGroups(data);
-      } else {
-        setGroups([]); // Fallback to an empty array
-      }
     };
     fetchData();
   }, []);
 
-  const onViewSpecies = useCallback((groupId, groupName) => {
+  const onViewSpecies = (groupId) => {
     navigate(`/species/${groupId}`);
-  }, [navigate]);
+  };
 
   const handleOpenModal = (group = null) => {
-    setSelectedGroup(group || null);
+    if (group) {
+      setSelectedGroup(group);
+      setIsEditMode(true);
+    } else{
+      setSelectedGroup(null);
+      setIsEditMode(false);
+    }
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedGroup(null); // Reset state when closing the modal
+    // Reset selected group only if it was in "Add Group" mode
+    if (!isEditMode) {
+      setSelectedGroup(null); // Only reset if it's in "Add" mode
+    }
+    setIsEditMode(false); // Reset the edit mode
+    setIsModalOpen(false); // Close the modal
   };
 
   const onDeleteGroup = async (groupId) => {
@@ -61,6 +68,7 @@ const GroupComponent = () => {
   const refreshGroups = async () => {
     const data = await fetchGroupDataApi();
     setGroups(data); // Update groups state with the latest data
+    setSelectedGroup(null);
   };
 
   return (
@@ -72,7 +80,13 @@ const GroupComponent = () => {
         <Tooltip title="Add Group" arrow>
           <Button variant="contained" color="primary" onClick={() => handleOpenModal()}>Add Group</Button>
         </Tooltip>
-        <GroupManagementComponent open={isModalOpen} onClose={handleCloseModal} selectedGroup={selectedGroup} refreshGroups={refreshGroups} />
+        <GroupManagementComponent 
+        open={isModalOpen} 
+        onClose={handleCloseModal} 
+        selectedGroup={selectedGroup} 
+        refreshGroups={refreshGroups} 
+        isEditMode={isEditMode} 
+        />
       </Box>
       <div style={{ flex: 1 }}>
         <Grid container spacing={2} justifyContent="left">

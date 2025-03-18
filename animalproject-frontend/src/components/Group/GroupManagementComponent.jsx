@@ -36,7 +36,11 @@ const GroupManagementComponent = ({ open, onClose, selectedGroup, refreshGroups 
 
     return (
         <Dialog open={open} onClose={onClose} fullWidth>
-            <DialogTitle>{selectedGroup ? 'Edit Group' : 'Add Group'}</DialogTitle>
+            <DialogTitle>  
+                {selectedGroup
+                        ? `Edit ${selectedGroup.name}${selectedGroup.name.endsWith('s') ? '' : 's'}` //checks if group name already ends with an S
+                        : 'Add Group'}
+            </DialogTitle>
             <DialogContent>
                 <TextField fullWidth label="Group Name" value={name} onChange={(e) => setName(e.target.value)} margin="dense" />
                 <TextField fullWidth label="Description" value={desc} onChange={(e) => setDesc(e.target.value)} margin="dense" />
