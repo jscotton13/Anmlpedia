@@ -42,8 +42,8 @@ public class SpeciesController {
     }
     //REST (GET): /api/species/{speciesId}
     @Operation(summary = "Get species by its ID", description = "Gets species by its ID")
-    @GetMapping("/{speciesId}")
-    public ResponseEntity<SpeciesDto> getSpeciesById(@PathVariable Long speciesId) {
+    @GetMapping("/{id}")
+    public ResponseEntity<SpeciesDto> getSpeciesById(@PathVariable("id") Long speciesId) {
         return ResponseEntity.ok(speciesService.getSpeciesBySpeciesId(speciesId));
     }
 
@@ -63,15 +63,15 @@ public class SpeciesController {
 
     // Update an existing species
     @Operation(summary = "Update species", description = "Updates a species by using its id")
-    @PutMapping("/{speciesId}")
-    public ResponseEntity<SpeciesDto> updateSpecies(@PathVariable Long speciesId, @RequestBody SpeciesDto speciesDto) {
+    @PutMapping("/{id}")
+    public ResponseEntity<SpeciesDto> updateSpecies(@PathVariable("id") Long speciesId, @RequestBody SpeciesDto speciesDto) {
         return ResponseEntity.ok(speciesService.updateSpecies(speciesDto, speciesId));
     }
 
     // Delete a species by ID
     @Operation(summary = "Deletes a species", description = "Deletes a species by using its id")
-    @DeleteMapping("/{speciesId}")
-    public ResponseEntity<String> deleteSpecies(@PathVariable Long speciesId) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteSpecies(@PathVariable("id") Long speciesId) {
         speciesService.deleteSpecies(speciesId);
         return ResponseEntity.ok("Species deleted successfully!");
     }

@@ -4,7 +4,7 @@ import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Tooltip }
 import { useParams, useNavigate } from 'react-router-dom';
 import { getAllSpecies, getSpeciesByGroupId, deleteSpecies } from '../../services/speciesService'
 import { getGroupById } from '../../services/groupService'
-import SpeciesManagementComponent from './SpeciesManagementComponent ';
+import SpeciesManagementComponent from './SpeciesManagementComponent';
 // Context for species data
 const SpeciesContext = createContext();
 
@@ -24,17 +24,14 @@ export const SpeciesComponent = () => {
     const [species, setSpecies] = useState([]);
     const [selectedSpecies, setSelectedSpecies] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const {groupId} = useParams();
+    const [isEditMode, setIsEditMode] = useState(false);
     
+    const {groupId} = useParams();
     const [groupName, setGroupName] = useState("");
-
-
 
     useEffect(() => {
         console.log("Current Params:", { groupId });
-
         setSpecies([]);  // Reset species before fetching new data
-
         if (groupId) {
             fetchGroupName(groupId);
             fetchSpeciesDataByGroup(groupId);
@@ -57,7 +54,6 @@ export const SpeciesComponent = () => {
     const fetchSpeciesDataByGroup = async (groupId) => {
         try {
             const response = await getSpeciesByGroupId(groupId); // Fetch species by groupId
-            console.log("Fetched Species for Group: ", response.data); //debugging log
             setSpecies(response.data);
         } catch (error) {
             console.error("Error fetching species data by group:", error);
@@ -73,7 +69,15 @@ export const SpeciesComponent = () => {
         }
     };
     const handleOpenModal = (species = null) => {
-        setSelectedSpecies(species || null);
+        if (species && species.id) {
+            console.log("Opening modal for editing species:", species);
+            setSelectedSpecies(species);
+            setIsEditMode(true);
+        } else {
+            console.log("Opening modal for adding a new species.");
+            setSelectedSpecies({ name: "", desc: "", imgPath: "", groupId: groupId || null }); 
+            setIsEditMode(false);
+        }
         setIsModalOpen(true);
     };
     
@@ -93,10 +97,11 @@ export const SpeciesComponent = () => {
   };
 
   const refreshSpecies = async () => {
+    console.log("Refreshing species list... ")
     if (groupId) {
-        fetchSpeciesDataByGroup(groupId); // Fetch species for a specific group
+       await fetchSpeciesDataByGroup(groupId); // Refresh group-specific species
     } else {
-        fetchSpeciesData(); // Fetch all species
+       await fetchSpeciesData(); // Refreshes all species
     }
 };
 
@@ -111,7 +116,13 @@ export const SpeciesComponent = () => {
                         Add Species
                     </Button>
                 </Tooltip>
-                <SpeciesManagementComponent open={isModalOpen} onClose={handleCloseModal} selectedSpecies={selectedSpecies} refreshSpecies={refreshSpecies}/>
+                <SpeciesManagementComponent 
+                open={isModalOpen} 
+                onClose={handleCloseModal} 
+                selectedSpecies={selectedSpecies} 
+                refreshSpecies={refreshSpecies}
+                isEditMode={isEditMode}
+                />
             </Box>
             <Grid container spacing={2} justifyContent="left">
                 {species.map((species) => (
