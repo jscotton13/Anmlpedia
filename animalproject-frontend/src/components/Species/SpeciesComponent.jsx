@@ -26,25 +26,24 @@ export const SpeciesComponent = () => {
     
     const { groupName } = useParams(); // Get groupName from URL
     const [groupId, setGroupId] = useState(null); // Track groupId
-    const [groupNameTitle, setGroupName] = useState(""); // For setting group name title for UI
+    const [groupNameTitle, setGroupNameTitle] = useState(""); // For setting group name title for UI
     
     useEffect(() => {
         console.log("Current Params:", { groupId });
         if (groupName) {
-            fetchGroupIdByName(groupName);
+            fetchSpeciesByGroupName(groupName);
         } else {
             fetchSpeciesData();
         }
     }, [groupName]);
 
 
-    const fetchGroupIdByName = async (groupName) => {
+    const fetchSpeciesByGroupName = async (groupName) => {
         try {
             const response = await getSpeciesByGroupName(groupName); // API to get species by groupName
             console.log("Fetched species by group:", response.data);
-            setGroupId(response.data.groupId); // Set groupId from response
-            setGroupName(groupName); // Set groupName title for UI display
-            setSpecies(response.data.species); // Update species
+            setSpecies(response.data); // Update species state
+            setGroupNameTitle(groupName); // Set group name for UI
         } catch (error) {
             console.error("Error fetching species by groupName:", error);
         }
@@ -53,29 +52,34 @@ export const SpeciesComponent = () => {
     const fetchSpeciesData = async () => {
         try {
             const response = await getAllSpecies(); // API call to get all species
-            console.log("Fetched species data:", response.data);
             setSpecies(response.data);
         } catch (error) {
             console.error("Error fetching species data:", error);
         }
     };
+    
+    
+    const onViewAnimals = (speciesId, speciesName) => {
+        navigate(`/animals/${speciesId}`); // Navigate to the animals page for this species
+    };
 
     const handleOpenModal = (species = null) => {
         if (species) {
-            console.log("Opening modal for editing species:", species);
             setSelectedSpecies(species);
             setIsEditMode(true);
         } else {
-            console.log("Opening modal for adding a new species.");
-            setSelectedSpecies({ name: "", desc: "", imgPath: "", groupId: groupId || null }); 
+            setSelectedSpecies(null); 
             setIsEditMode(false);
         }
         setIsModalOpen(true);
     };
     
     const handleCloseModal = () => {
-        setIsModalOpen(false);
-        setSelectedSpecies(null); // Reset state when closing the modal
+        if (!isEditMode) {
+            setSelectedSpecies(null); // Only reset if it's in "Add" mode
+          }
+          setIsEditMode(false); // Reset the edit mode
+          setIsModalOpen(false); // Close the modal
     };
 
   const onDeleteSpecies = async (speciesId) => {
@@ -105,7 +109,7 @@ export const SpeciesComponent = () => {
             </Typography>
             <Box textAlign="center" className="p-4" sx={{ marginTop: '0px' }}>
                 <Tooltip title="Add Species" arrow>
-                    <Button variant="contained" onClick={handleOpenModal}>
+                    <Button variant="contained" onClick={() => handleOpenModal()}>
                         Add Species
                     </Button>
                 </Tooltip>

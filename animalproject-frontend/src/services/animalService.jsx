@@ -9,10 +9,10 @@ export const getAllAnimals = () => axios.get(API_URL);
 export const getAnimalById = (id) => axios.get(`${API_URL}/${id}`);
 
 // Get animals by Species ID
-export const getAnimalsBySpeciesId = (speciesId) => axios.get(`${API_URL}/species/${speciesId}`);
+export const getAnimalsBySpeciesId = (speciesId) => axios.get(`${API_URL}/${speciesId}`);
 
 // Get animals by Species Name
-export const getAnimalsBySpeciesName = (speciesName) => axios.get(`${API_URL}/speciesname/${speciesName}`);
+export const getAnimalsBySpeciesName = (speciesName) => axios.get(`${API_URL}/${speciesName}`);
 
 // Add a new animal
 export const addAnimal = (animalData) => axios.post(API_URL, animalData);

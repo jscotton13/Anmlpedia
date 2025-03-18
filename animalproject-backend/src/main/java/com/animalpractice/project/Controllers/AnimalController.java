@@ -46,7 +46,7 @@ public class AnimalController {
 
     // REST (GET): /api/animal/speciesname/{speciesName}
     @Operation(summary = "Get animals by Species Name", description = "Retrieves all animals that belong to the species with the given name")
-    @GetMapping("/speciesname/{speciesName}")
+    @GetMapping("/{speciesName}")
     public ResponseEntity<List<AnimalDto>> getAnimalsBySpeciesName(@PathVariable String speciesName) {
         return ResponseEntity.ok(animalService.getAnimalBySpeciesName(speciesName));
     }

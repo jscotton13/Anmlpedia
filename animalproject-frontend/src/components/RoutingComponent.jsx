@@ -16,10 +16,12 @@ const RoutesComponent = () => {
         {/* View Species (All or by Group) */}
         <Route path="/species" element={<SpeciesComponent />} />
         <Route path="/species/:groupId" element={<SpeciesComponent />} /> 
+        <Route path="/species/:groupName" element={<SpeciesComponent />} /> 
 
-        {/* View Animals (All or by Group) */}
+        {/* View Animals (All or by Species) */}
         <Route path="/animals" element={<SpeciesComponent />} />
-        <Route path="/animals/:groupId" element={<SpeciesComponent />} /> 
+        <Route path="/animals/:speciesId" element={<SpeciesComponent />} /> 
+        <Route path="/animals/:speciesName" element={<SpeciesComponent />} /> 
 
 
     </Routes>

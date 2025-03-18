@@ -7,14 +7,15 @@ const SpeciesManagementComponent = ({ open, onClose, selectedSpecies, refreshSpe
     const [name, setName] = useState('');
     const [desc, setDesc] = useState('');
     const [imgPath, setImgPath] = useState('');
-    const [groupId, setGroupId] = useState('');
-    const [groups, setGroups] = useState([]); // Store available groups
+    const [groupName, setGroupName] = useState('');  // Handle group name input
+    const [groups, setGroups] = useState([]); // Store available groups to check if entered group exists
+    const [groupId, setGroupId] = useState(null);  // Store the resolved groupId
 
     useEffect(() => {
         const fetchGroups = async () => {
             try {
                 const response = await getAllGroups();
-                setGroups(response.data);
+                setGroups(response.data);  // Store groups fetched from API
             } catch (error) {
                 console.error("Error fetching groups:", error);
             }
@@ -28,30 +29,40 @@ const SpeciesManagementComponent = ({ open, onClose, selectedSpecies, refreshSpe
             setName(selectedSpecies.name);
             setDesc(selectedSpecies.desc);
             setImgPath(selectedSpecies.imgPath || '');
-            setGroupId(selectedSpecies.group?.id || '');
+            setGroupName(selectedSpecies.groupName || '');  // Set group name from selected species
+            setGroupId(selectedSpecies.groupId || null); // Ensure groupId is set properly (if editing)
+            const group = groups.find(g => g.id === selectedSpecies.groupId);
+            setGroupName(group ? group.name : ''); // Set the group name from the groupId
         } else {
             setName('');
             setDesc('');
             setImgPath('');
-            setGroupId('');
+            setGroupName('');
+            setGroupId(null); // Reset groupId for new species
         }
-    }, [selectedSpecies, open]);
+    }, [selectedSpecies, open, groups]);
 
     const handleSubmit = async () => {
+    
+        // If a valid group is found, use its groupId, otherwise, leave groupId as null
         const speciesData = { 
             name, 
             desc, 
             imgPath, 
-            groupId: Number(groupId) // Ensure groupId is a number
+            group: { id: groupId }
         };
 
         try {
             if (selectedSpecies) {
-                await updateSpecies(selectedSpecies.id, speciesData);  // Update species
+              
+                    console.log(speciesData)
+                    await updateSpecies(selectedSpecies.id, speciesData);
+                
             } else {
+                // Adding new species
                 await addSpecies(speciesData);  // Add new species
             }
-            await refreshSpecies();
+            await refreshSpecies();  // Refresh the species list
             onClose();
         } catch (error) {
             console.error("Error saving species:", error);
@@ -65,12 +76,16 @@ const SpeciesManagementComponent = ({ open, onClose, selectedSpecies, refreshSpe
                 <TextField fullWidth label="Species Name" value={name} onChange={(e) => setName(e.target.value)} margin="dense" />
                 <TextField fullWidth label="Description" value={desc} onChange={(e) => setDesc(e.target.value)} margin="dense" />
                 <TextField fullWidth label="Image URL" value={imgPath} onChange={(e) => setImgPath(e.target.value)} margin="dense" />
-
+                
                 {/* Dropdown for selecting a group */}
                 <FormControl fullWidth margin="dense">
                     <InputLabel>Group</InputLabel>
-                    <Select value={groupId} onChange={(e) => setGroupId(e.target.value)}>
-                        {groups.map(group => (
+                    <Select
+                        value={groupId || ''}
+                        onChange={(e) => setGroupId(e.target.value)}  // Update groupId when a selection is made
+                        label="Group"
+                    >
+                        {groups.map((group) => (
                             <MenuItem key={group.id} value={group.id}>
                                 {group.name}
                             </MenuItem>

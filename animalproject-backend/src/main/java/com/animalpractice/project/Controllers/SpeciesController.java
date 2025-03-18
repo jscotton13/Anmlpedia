@@ -36,7 +36,7 @@ public class SpeciesController {
 
     //REST (GET): /api/species/group/{groupId}
     @Operation(summary = "Get species by Group ID", description = "Gets species by Group ID")
-    @GetMapping("/group/{groupId}")
+    @GetMapping("/{groupId}")
     public ResponseEntity<List<SpeciesDto>> getSpeciesByGroupId(@PathVariable Long groupId) {
         return ResponseEntity.ok(speciesService.getSpeciesByGroupId(groupId));
     }
