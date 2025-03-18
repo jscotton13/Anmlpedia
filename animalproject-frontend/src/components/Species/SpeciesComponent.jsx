@@ -2,8 +2,7 @@ import React, { useEffect, useState, createContext, useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Tooltip } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getAllSpecies, getSpeciesByGroupId, getSpeciesByGroupName, deleteSpecies } from '../../services/speciesService'
-import { getGroupById } from '../../services/groupService'
+import { getAllSpecies,  getSpeciesByGroupName, deleteSpecies } from '../../services/speciesService'
 import SpeciesManagementComponent from './SpeciesManagementComponent';
 // Context for species data
 const SpeciesContext = createContext();
