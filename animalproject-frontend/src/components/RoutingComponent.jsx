@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import GroupComponent from './Group/GroupComponent';
 import { SpeciesComponent } from './Species/SpeciesComponent';
-import AnimalComponent from "./components/Animals/AnimalComponent";
+import AnimalComponent from "./Animals/AnimalComponent";
 
 
 const RoutesComponent = () => {

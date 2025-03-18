@@ -2,7 +2,7 @@ import './App.css'
 import HeaderComponent from './components/UI/HeaderComponent'
 import FooterComponent from './components/UI/FooterComponent'
 import RoutesComponent from './components/RoutingComponent'
-import {SpeciesProvider} from './components/Species/speciesComponent'
+import {SpeciesProvider} from './components/Species/SpeciesComponent'
 import {BrowserRouter} from 'react-router-dom'
 
 

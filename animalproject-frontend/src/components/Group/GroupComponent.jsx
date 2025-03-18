@@ -30,8 +30,8 @@ const GroupComponent = () => {
     fetchData();
   }, []);
 
-  const onViewSpecies = (groupId) => {
-    navigate(`/species/${groupId}`);
+  const onViewSpecies = (groupName) => {
+    navigate(`/${groupName}/species`);
   };
 
   const handleOpenModal = (group = null) => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Button, Card, CardContent, CardHeader, CardMedia } from '@mui/material';  // Assuming Material UI is used
-import { getAnimalsBySpeciesId } from '../services/animalService'; // Import the Axios service
+import { getAnimalsBySpeciesId } from '../../services/animalService'; // Import the Axios service
 
 const AnimalComponent = () => {
   const [speciesName, setSpeciesName] = useState('');
@@ -11,7 +11,7 @@ const AnimalComponent = () => {
   const [error, setError] = useState('');
 
   const { speciesId: routeSpeciesId, speciesName: routeSpeciesName } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setSpeciesId(routeSpeciesId);
