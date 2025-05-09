@@ -81,8 +81,14 @@ const fetchAnimalData = async () => {
       console.log("Refreshing species list... ")
       if (speciesId) {
          await getAnimalsBySpeciesId(speciesId); // Refresh group-specific species
+         setAnimals(response.data);
       } else {
-         await fetchAnimalData(); // Refreshes all species
+        try {
+            const response = await getAllAnimals();
+            setAnimals(response.data);
+        } catch (error) {
+            console.error('Error refreshing all animals:', error);
+        }
       }
   };
   return (
