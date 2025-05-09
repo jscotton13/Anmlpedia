@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import React, {  useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllGroups, deleteGroup } from "../../services/groupService";
-import GroupManagementComponent from "./groupManagementComponent";
+import GroupManagementComponent from "./GroupManagementComponent";
 
 const GroupComponent = () => {
   const [groups, setGroups] = useState([]);
@@ -73,7 +73,7 @@ const GroupComponent = () => {
   return (
     <div style={{ width: "100%", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <Typography variant="h3" align="center" color="black" gutterBottom sx={{ marginBottom: "-8px" }} className="p-4">
-        Animal Groups
+      {"Learn About The Wide Range Of Different Animal Groups!"}
       </Typography>
       <Box textAlign="center" className="p-4" sx={{ marginTop: "0px" }}>
         <Tooltip title="Add Group" arrow>
@@ -99,7 +99,7 @@ const GroupComponent = () => {
                 </CardContent>
                 <CardActions style={{ justifyContent: "center", gap: "8px" }}>
                   <Tooltip title="View Group" arrow>
-                    <Button variant="contained" size="small" color="primary" onClick={() => onViewSpecies(group.id, group.name)}>View {group.name}</Button>
+                  <Button variant="contained" size="small" color="primary" onClick={() => onViewSpecies(group.id, group.name)}>View {group.name}</Button>
                   </Tooltip>
                   <Tooltip title="Edit Group" arrow>
                     <Button variant="contained" size="small" color="secondary" onClick={() => handleOpenModal(group)}>Edit {group.name}</Button>

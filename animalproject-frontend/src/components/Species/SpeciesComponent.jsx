@@ -24,18 +24,19 @@ export const SpeciesComponent = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     
-    const { groupName } = useParams(); // Get groupName from URL
-    const [groupId, setGroupId] = useState(null); // Track groupId
+    const { groupId, groupName } = useParams();
     const [groupNameTitle, setGroupNameTitle] = useState(""); // For setting group name title for UI
     
     useEffect(() => {
-        console.log("Current Params:", { groupId });
+        console.log("Current Params:", { groupId, groupName });
         if (groupName) {
             fetchSpeciesByGroupName(groupName);
-        } else {
+        } else if (groupId){
+            fetchSpeciesByGroupId(groupId)
+        }else{
             fetchSpeciesData();
         }
-    }, [groupName]);
+    }, [groupId, groupName]);
 
 
     const fetchSpeciesByGroupName = async (groupName) => {
@@ -46,6 +47,20 @@ export const SpeciesComponent = () => {
             setGroupNameTitle(groupName); // Set group name for UI
         } catch (error) {
             console.error("Error fetching species by groupName:", error);
+        }
+    };
+
+    
+    const fetchSpeciesByGroupId = async (groupId) => {
+        try {
+            const response = await getSpeciesByGroupId(groupId); // API to get species by groupName
+            console.log("Fetched species by group:", response.data);
+            setSpecies(response.data); // Update species state
+            // Use Id to get group name for UI
+            const groupResponse = await getGroupNameById(groupId);
+            setGroupNameTitle(groupResponse.data.name); 
+        } catch (error) {
+            console.error("Error fetching species by groupId:", error);
         }
     };
 
@@ -105,7 +120,7 @@ export const SpeciesComponent = () => {
     return (
         <div style={{ width: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h3" align="center" color="black" gutterBottom sx={{ marginBottom: '-8px' }} className="p-4">
-                {groupId ? `Discover Different ${groupName} Species!` : "Discover A Diverse Range Of Species!"}
+            {"Discover A Diverse Range Of Species!"}            
             </Typography>
             <Box textAlign="center" className="p-4" sx={{ marginTop: '0px' }}>
                 <Tooltip title="Add Species" arrow>

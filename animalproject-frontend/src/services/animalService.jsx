@@ -6,13 +6,13 @@ const API_URL = "http://localhost:8080/api/animal";
 export const getAllAnimals = () => axios.get(API_URL);
 
 // Get animal by ID
-export const getAnimalById = (id) => axios.get(`${API_URL}/${id}`);
+export const getAnimalById = (id) => axios.get(`${API_URL}/id/${id}`);
 
 // Get animals by Species ID
-export const getAnimalsBySpeciesId = (speciesId) => axios.get(`${API_URL}/${speciesId}`);
+export const getAnimalsBySpeciesId = (speciesId) => axios.get(`${API_URL}/species/id/${speciesId}`);
 
 // Get animals by Species Name
-export const getAnimalsBySpeciesName = (speciesName) => axios.get(`${API_URL}/${speciesName}`);
+export const getAnimalsBySpeciesName = (speciesName) => axios.get(`${API_URL}/species/name/${speciesName}`)
 
 // Add a new animal
 export const addAnimal = (animalData) => axios.post(API_URL, animalData);

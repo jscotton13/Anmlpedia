@@ -30,23 +30,23 @@ public class AnimalController {
         return ResponseEntity.ok(animals);
     }
 
-    // REST (GET): /api/animal/{animalId}
+    // REST (GET): /api/animal/id/{animalId}
     @Operation(summary = "Get an animal by ID", description = "Retrieves an animal by its ID")
-    @GetMapping("/{animalId}")
+    @GetMapping("/id/{animalId}")
     public ResponseEntity<AnimalDto> getAnimalById(@PathVariable Long animalId) {
         return ResponseEntity.ok(animalService.getAnimalById(animalId));
     }
 
-    // REST (GET): /api/animal/{speciesId}
+    // REST (GET): /api/animal/species/id/{speciesId}
     @Operation(summary = "Get animals by Species ID", description = "Retrieves all animals that belong to the specified species")
-    @GetMapping("/{speciesId}")
+    @GetMapping("/species/id/{speciesId}")
     public ResponseEntity<List<AnimalDto>> getAnimalsBySpeciesId(@PathVariable Long speciesId) {
         return ResponseEntity.ok(animalService.getAnimalBySpeciesId(speciesId));
     }
 
-    // REST (GET): /api/animal/{speciesName}
+    // REST (GET): /api/animal/species/name/{speciesName}
     @Operation(summary = "Get animals by Species Name", description = "Retrieves all animals that belong to the species with the given name")
-    @GetMapping("/{speciesName}")
+    @GetMapping("/species/name/{speciesName}")
     public ResponseEntity<List<AnimalDto>> getAnimalsBySpeciesName(@PathVariable String speciesName) {
         return ResponseEntity.ok(animalService.getAnimalBySpeciesName(speciesName));
     }

@@ -30,13 +30,14 @@ const AnimalManagementComponent = ({ open, onClose, selectedAnimal, refreshAnima
             setDesc(selectedAnimal.desc);
             setImgPath(selectedAnimal.imgPath || '');
             setSpeciesId(selectedAnimal.speciesId || '');  // Set speciesId from selected animal
-            const species = species.find(s => s.id === selectedAnimal.speciesId);
-            setSpeciesName(species ? species.name : ''); // Set the species name from the speciesId
+            const matchedSpecies = species.find(s => s.id === selectedAnimal.speciesId);
+            setSpeciesName(matchedSpecies ? matchedSpecies.name : ''); // Set the species name from the speciesId
         } else {
             setName('');
             setDesc('');
             setImgPath('');
             setSpeciesId(''); // Reset speciesId for new animal
+            setSpeciesName('');
         }
     }, [selectedAnimal, open, species]);
 

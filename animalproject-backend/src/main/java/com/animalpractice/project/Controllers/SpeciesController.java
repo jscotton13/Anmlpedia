@@ -36,7 +36,7 @@ public class SpeciesController {
 
     //REST (GET): /api/species/group/{groupId}
     @Operation(summary = "Get species by Group ID", description = "Gets species by Group ID")
-    @GetMapping("/{groupId}")
+    @GetMapping("/group/id/{groupId}")
     public ResponseEntity<List<SpeciesDto>> getSpeciesByGroupId(@PathVariable Long groupId) {
         return ResponseEntity.ok(speciesService.getSpeciesByGroupId(groupId));
     }
@@ -49,7 +49,7 @@ public class SpeciesController {
 
     //REST (GET): /api/species/{groupName}
     @Operation(summary = "Get species by Group Name", description = "Gets all species that belong to the group with the specified name")
-    @GetMapping("/{groupName}")
+    @GetMapping("/group/name/{groupName}")
     public ResponseEntity<List<SpeciesDto>> getSpeciesByGroupName(@PathVariable String groupName) {
         return ResponseEntity.ok(speciesService.getSpeciesByGroupName(groupName));
     }
@@ -63,7 +63,7 @@ public class SpeciesController {
 
     // Update an existing species
     @Operation(summary = "Update species", description = "Updates a species by using its id")
-    @PutMapping("/{id}")
+    @PutMapping("/id/{id}")
     public ResponseEntity<SpeciesDto> updateSpecies(@PathVariable("id") Long speciesId, @RequestBody SpeciesDto speciesDto) {
         return ResponseEntity.ok(speciesService.updateSpecies(speciesDto, speciesId));
     }

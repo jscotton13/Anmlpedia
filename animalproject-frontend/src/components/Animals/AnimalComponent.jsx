@@ -7,7 +7,8 @@ const AnimalComponent = () => {
   const [animals, setAnimals] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAnimal, setSelectedAnimal] = useState(null);
-  const [isEditMode, setIsEditMode] = useState(false); const { speciesId, speciesName } = useParams(); // Use speciesId and speciesName from URL
+  const [isEditMode, setIsEditMode] = useState(false); 
+  const { speciesId, speciesName } = useParams(); // Use speciesId and speciesName from URL
 
   useEffect(() => {
       if (speciesId) {
@@ -87,7 +88,7 @@ const fetchAnimalData = async () => {
   return (
       <div style={{ width: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           <Typography variant="h3" align="center" color="black" gutterBottom sx={{ marginBottom: '-8px' }} className="p-4">
-              {speciesId ? `Discover Different ${speciesName} Animals!` : "Discover A Diverse Range Of Animals!"}
+              {"Learn About Specific Types Of Animals!"}
           </Typography>
           <Box textAlign="center" className="p-4" sx={{ marginTop: '0px' }}>
               <Tooltip title="Add Animal" arrow>

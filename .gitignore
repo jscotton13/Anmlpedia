@@ -49,6 +49,10 @@ dist/
 dist-ssr/
 *.local
 
+# Assets folder inside public used for testing
+/public/assets/
+
+
 # Editor and OS files
 .vscode/*
 !.vscode/extensions.json

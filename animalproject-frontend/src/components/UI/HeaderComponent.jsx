@@ -6,14 +6,14 @@ const HeaderComponent = () => {
     <div style={{ width: '100%', margin: 0, padding: 0, position: 'relative' }}>
       <header style={{ width: '100%', margin: 0, padding: 0, position: 'fixed', top: 0, left: 0, zIndex: 100 }}>
         <nav className='navbar navbar-expand-lg navbar-dark bg-dark' style={{ margin: 0, padding: '0 20px', width: '100%' }}>
-          <a className="navbar-brand" href="groups" style={{ fontSize: '24px', fontWeight: 'bold', color: '#FFD700' }}>Anmlpedia</a>
+        <NavLink className="navbar-brand" to="/groups" style={{ fontSize: '24px', fontWeight: 'bold', color: '#FFD700' }}>Anmlpedia</NavLink>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav" style={{ marginLeft: 'auto' }}>
               {/* Group Link */}
               <li className="nav-item">
                 <NavLink 
                   className='nav-link' 
-                  to='groups' 
+                  to='/groups' 
                   style={({ isActive }) => ({
                     padding: '12px 20px',
                     color: isActive ? '#FFD700' : 'white', 
@@ -33,7 +33,7 @@ const HeaderComponent = () => {
               <li className="nav-item">
                 <NavLink 
                   className='nav-link' 
-                  to='species' 
+                  to='/species' 
                   style={({ isActive }) => ({
                     padding: '12px 20px',
                     color: isActive ? '#FFD700' : 'white',
